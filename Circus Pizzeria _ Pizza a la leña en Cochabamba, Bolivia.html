@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es-BO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Circus Pizzeria | Pizza a la leña en Cochabamba, Bolivia</title>
+<meta name="description" content="Circus Pizzeria: pizzas artesanales a la leña con ingredientes naturales en Cochabamba, Bolivia. Mira el menú y arma tu pedido.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230e0c0b'/%3E%3Cpath d='M32 14 8 56h48z' fill='%23fff'/%3E%3Cpath d='M32 4v12l10-4z' fill='%23e5102b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0e0c0b;--char:#1c1917;--red:#e5102b;--redt:#ff5a6a;--cream:#f7eddb;--card:#fffaf0;--amb:#ffb81c;--mut:#b9ad9a;--hh:56px;--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);--f1:'Bebas Neue','Arial Narrow',Impact,sans-serif;--f2:'Inter',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{font:16px/1.5 var(--f2);background:var(--ink);color:var(--cream);overflow-x:clip;padding-bottom:calc(76px + var(--sab))}
+body.lock{overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+a{color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--amb);outline-offset:2px}
+h1,h2,h3{font-family:var(--f1);font-weight:400;letter-spacing:.03em;line-height:1}
+h1{font-size:clamp(40px,11vw,76px)}h2{font-size:clamp(32px,8vw,52px)}h3{font-size:24px}
+.wrap{width:min(1180px,100% - 32px);margin-inline:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:999px;border:2px solid var(--cream);font-weight:800;text-decoration:none;transition:transform .15s,background .15s}
+.btn:active{transform:scale(.97)}
+.btn.pri{background:var(--amb);border-color:var(--amb);color:var(--ink)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+.stripes{height:8px;background:repeating-linear-gradient(90deg,var(--cream) 0 14px,transparent 14px 22px);opacity:.9}
+/* top bar */
+.top{position:sticky;top:0;z-index:50;background:var(--ink);padding-top:var(--sat)}
+.top .in{height:var(--hh);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo-s{width:92px;height:auto;display:block}
+.nav{display:none;gap:4px}
+.nav a{padding:10px 14px;text-decoration:none;font-weight:600;border-radius:8px}
+.nav a[aria-current=page]{color:var(--redt);box-shadow:inset 0 -3px var(--red)}
+.burger{min-width:44px;min-height:44px;font-size:26px}
+.drawer{position:absolute;left:0;right:0;top:100%;background:var(--char);padding:8px 16px 16px;border-bottom:3px solid var(--red)}
+.drawer a{display:flex;align-items:center;min-height:48px;text-decoration:none;font:24px var(--f1);letter-spacing:.04em;border-bottom:1px solid #333}
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;background:var(--char);border-top:2px solid var(--red);padding-bottom:var(--sab)}
+.bnav a{flex:1;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;font-size:12px;font-weight:600}
+.bnav a[aria-current=page]{color:var(--amb)}
+.cnt{background:var(--red);color:#fff;border-radius:99px;padding:0 7px;font-size:12px;margin-left:4px}
+.cnt:empty,.cnt[data-n="0"]{display:none}
+.cartbar{position:fixed;z-index:55;left:12px;right:12px;bottom:calc(66px + var(--sab));background:var(--amb);color:var(--ink);border-radius:14px;min-height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-weight:800;box-shadow:0 6px 20px #0008;text-decoration:none}
+/* views */
+.view{animation:vin .22s ease-out both}
+@keyframes vin{from{opacity:0}to{opacity:1}}
+.pad{padding:36px 0}
+.rv{transition:none}
+.js .rv{opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
+.js .rv.on{opacity:1;transform:none}
+/* hero */
+.hero{padding:20px 0 32px;position:relative}
+.hero .wrap{display:grid;gap:24px;align-items:center}
+.hlogo{position:relative;width:min(80vw,340px);aspect-ratio:7/5;margin:0 auto}
+.hlogo svg{width:100%;height:100%;overflow:visible;display:block}
+#pzg{opacity:0}
+.st{transform-box:view-box;transform-origin:257px 60px}
+.skip{position:absolute;right:16px;top:8px;min-height:44px;padding:0 16px;border:1px solid var(--mut);border-radius:99px;font-size:14px;display:none}
+.intro-run .skip{display:block}
+.slogan{text-align:center}
+.slogan p{color:var(--mut);margin:10px 0 20px;font-size:18px}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.photo{aspect-ratio:1;width:min(100%,420px);margin:0 auto;border-radius:20px;overflow:hidden;border:3px solid var(--cream);transition:transform .2s;transform:translateY(var(--py,0px))}
+.ph{display:block;position:relative;aspect-ratio:1;background:var(--char);overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph.bad{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--mut);text-align:center;font-size:12px;padding:6px}
+.ph.bad i{font-style:normal;font-size:34px}
+.intro-run #pzg{opacity:1;animation:pzo 2.9s both;transform-box:view-box;transform-origin:175px 125px}
+.intro-run .st{animation:sti .6s both cubic-bezier(.2,.9,.3,1.2);animation-delay:calc(1.7s + var(--i)*90ms)}
+.intro-run .fg{animation:fgi .45s both cubic-bezier(.3,1.5,.5,1);animation-delay:2.3s}
+.intro-run .tx{animation:txi .5s both ease-out;animation-delay:2.2s}
+.intro-run .w{animation:wd .55s both cubic-bezier(.2,.8,.2,1);animation-delay:calc(var(--i)*65ms)}
+.intro-run .t{animation:dr .45s both cubic-bezier(.3,1.4,.5,1);animation-delay:calc(.75s + var(--i)*70ms)}
+.w,.t{transform-box:view-box;transform-origin:175px 125px}
+@keyframes wd{from{transform:rotate(-70deg) scale(.1);opacity:0}}
+@keyframes dr{from{transform:translateY(-130px);opacity:0}}
+@keyframes pzo{0%,50%{opacity:1;transform:none}78%{opacity:1;transform:translate(82px,-65px) scale(.08) rotate(160deg)}79%,100%{opacity:0;transform:translate(82px,-65px) scale(.08)}}
+@keyframes sti{from{transform:scale(.04) rotate(-25deg);opacity:0}}
+@keyframes fgi{from{transform:translateY(-50px);opacity:0}}
+@keyframes txi{from{transform:translateX(-24px);opacity:0}}
+/* sections */
+.light{background:var(--cream);color:var(--ink)}
+.sec-h{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:16px}
+.car{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 16px 12px;margin:0 -16px;scrollbar-width:none}
+.car::-webkit-scrollbar,.cats::-webkit-scrollbar{display:none}
+.car .card{flex:0 0 min(78vw,300px);scroll-snap-align:start}
+.arrows{display:none;gap:8px}
+.arrows button{width:48px;height:48px;border:2px solid var(--cream);border-radius:50%;font-size:20px}
+.vals{display:grid;gap:14px}
+.val{border:1px solid #3a3632;border-radius:16px;padding:20px;background:var(--char)}
+.val b{font:28px var(--f1);color:var(--redt);display:block}
+.val p{color:var(--mut)}
+.cta{text-align:center;padding:48px 0;background:var(--red);color:#fff}
+.cta .btn.pri{margin-top:18px}
+/* cards */
+.card{background:var(--card);color:var(--ink);border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;box-shadow:0 2px 0 #0002;transition:transform .15s,box-shadow .15s;text-align:left}
+.card:active{transform:scale(.98)}
+.card .bd{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card p{font-size:14px;color:#4a443d;flex:1}
+.pr{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.pr b{font-size:18px;background:var(--amb);color:var(--ink);padding:2px 10px;border-radius:8px}
+.add{width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff;font-size:24px;line-height:1}
+.add:active{background:var(--red)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.rows{display:grid;gap:8px}
+.row{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:12px;padding:6px 8px 6px 16px;min-height:56px;cursor:pointer}
+.row span{flex:1;font-weight:600}.row small{display:block;font-weight:400;color:#6a6258}
+.row b{background:var(--amb);padding:2px 10px;border-radius:8px}
+.cats{position:sticky;top:calc(var(--hh) + var(--sat));z-index:40;background:var(--ink);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:8px 16px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
+.cats a{flex:none;min-height:44px;display:flex;align-items:center;padding:0 18px;border-radius:99px;border:1px solid #4a443d;text-decoration:none;font-weight:600;white-space:nowrap}
+.cats a.on{background:var(--red);border-color:var(--red);color:#fff}
+.msec{scroll-margin-top:130px;padding:28px 0 8px}
+.msec h2{margin-bottom:14px}
+.note{font-size:14px;color:#4a443d;margin-bottom:10px}
+/* sheet + wizard */
+.back{position:fixed;inset:0;z-index:80;background:#000a;display:flex;align-items:flex-end;justify-content:center}
+.back[hidden]{display:none}
+.sheet{background:var(--cream);color:var(--ink);width:min(560px,100%);max-height:92svh;overflow:auto;border-radius:22px 22px 0 0;padding:16px 16px calc(16px + var(--sab));animation:up .25s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.sheet .ph{border-radius:14px;max-height:240px;aspect-ratio:16/10}
+.sheet h2{margin:12px 0 4px}
+.x{float:right;width:44px;height:44px;font-size:24px}
+.qty{display:inline-flex;align-items:center;gap:6px}
+.qty button{width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);font-size:20px;font-weight:800}
+.wiz{position:fixed;inset:0;z-index:90;background:var(--cream);color:var(--ink);display:flex;flex-direction:column}
+.wiz[hidden]{display:none}
+.wh{padding:calc(10px + var(--sat)) 16px 10px;background:var(--ink);color:var(--cream)}
+.wh div{display:flex;justify-content:space-between;align-items:center}
+.bar{height:8px;background:#3a3632;border-radius:9px;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--red);transition:width .25s}
+.wb{flex:1;overflow:auto;padding:18px 16px}
+.wb h2{margin-bottom:12px}
+.wf{display:flex;gap:10px;align-items:center;padding:10px 16px calc(10px + var(--sab));background:var(--ink);color:var(--cream)}
+.wf .tot{flex:1;font-weight:800;font-size:20px;color:var(--amb)}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;min-height:56px;padding:10px 16px;background:var(--card);border:2px solid transparent;border-radius:14px;text-align:left;width:100%}
+.opt.sel{border-color:var(--red);background:#fff}
+.opt b{margin-left:auto}
+.opt .ic{font-size:22px}
+.fl{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.fl button{border:2px solid transparent;border-radius:14px;overflow:hidden;background:var(--card);text-align:left;font-weight:600}
+.fl button.sel{border-color:var(--red)}
+.fl span.n{display:block;padding:8px 10px}
+.chip{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:99px;background:var(--ink);color:var(--cream);margin:0 6px 6px 0}
+.sum li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #0002;list-style:none}
+textarea,input{width:100%;font:inherit;padding:10px;border-radius:10px;border:2px solid #0003;background:#fff;color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(130px + var(--sab));transform:translateX(-50%);background:var(--ink);color:#fff;border:1px solid var(--amb);padding:10px 18px;border-radius:99px;z-index:100;font-weight:600}
+/* pedir/cart */
+.start{display:grid;gap:12px;margin:16px 0 28px}
+.start button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:16px;border-radius:16px;background:var(--ink);color:var(--cream);text-align:left;min-height:72px}
+.start b{font:26px var(--f1)}
+.start span{color:var(--mut);font-size:14px}
+.ci{background:var(--card);border-radius:14px;padding:12px;margin-bottom:10px}
+.ci .top2{display:flex;justify-content:space-between;gap:10px}
+.ci small{color:#5a5248;display:block}
+.tl{display:flex;justify-content:space-between;font-size:22px;font-weight:800;margin:14px 0}
+/* about/branches */
+.tabs{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
+.tabs button{min-height:48px;padding:0 20px;border-radius:99px;border:2px solid var(--cream);font-weight:800}
+.tabs button[aria-selected=true]{background:var(--red);border-color:var(--red);color:#fff}
+.panel{background:var(--char);border-radius:18px;padding:22px;border-top:4px solid var(--red)}
+.panel dl{display:grid;gap:10px;margin-top:12px}.panel dt{color:var(--mut);font-size:13px}
+.three{display:grid;gap:12px;margin-top:20px}
+.three div{background:var(--char);border-radius:14px;padding:18px;border-left:4px solid var(--red)}
+.foot{padding:28px 0;color:var(--mut);font-size:14px;text-align:center}
+.top{transition:box-shadow .2s}.top.sc{box-shadow:0 4px 18px #000a}
+.prog{position:fixed;top:0;left:0;height:3px;width:100%;background:var(--red);transform:scaleX(0);transform-origin:0 50%;z-index:70}
+.awn{height:28px;background:repeating-linear-gradient(90deg,var(--red) 0 48px,var(--cream) 48px 96px);-webkit-mask:radial-gradient(circle 24px at 24px 4px,#000 99%,#0000) 0 0/48px 100% repeat-x;mask:radial-gradient(circle 24px at 24px 4px,#000 99%,#0000) 0 0/48px 100% repeat-x}
+.pw{position:relative}.tag{position:absolute;right:10px;bottom:10px;background:var(--amb);color:var(--ink);padding:3px 11px;border-radius:9px;font-size:18px;font-weight:800;box-shadow:0 2px 8px #0007}
+.more{font-weight:800;color:#b80d22}
+.card .ph img{transition:transform .35s}
+.ul{position:relative;padding-bottom:12px}.ul:after{content:"";position:absolute;left:0;bottom:0;height:4px;width:64px;background:var(--red);border-radius:4px}
+.js .ul:after{transform:scaleX(0);transform-origin:0;transition:transform .5s .25s}
+.js .on .ul:after,.js .ul.on:after{transform:none}
+.i{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.vi{display:block;margin-bottom:10px;color:var(--redt)}.vi .i{width:40px;height:40px}
+.val{transition:transform .2s,border-color .2s}.val:active{transform:scale(.98)}
+.cities{display:grid;gap:12px;margin-top:8px}
+.city{display:flex;align-items:center;justify-content:space-between;min-height:84px;padding:0 22px;border-radius:16px;background:var(--char);border:1px solid #3a3632;text-decoration:none;font:clamp(32px,8vw,44px) var(--f1);letter-spacing:.04em;transition:transform .2s,border-color .2s}
+.city:after{content:"→";color:var(--amb);transition:transform .2s}
+.city:active{transform:scale(.98)}
+.ph.herobg{position:absolute;inset:0;aspect-ratio:auto;background:none}
+.ph.herobg img{opacity:.35}
+.ph.herobg:after{content:"";position:absolute;inset:0;background:radial-gradient(60% 45% at 50% 25%,#e5102b40,#0000),linear-gradient(#0e0c0b00 35%,var(--ink))}
+.ph.herobg.bad *{display:none}
+.cta .ph.herobg:after{background:#e5102bcc}
+.hero .wrap,.mhead .wrap,.cta .wrap{position:relative}
+.cta{position:relative;overflow:hidden}
+.mhead{position:relative;background:var(--ink);color:var(--cream);padding:32px 0 24px;overflow:hidden}
+.pop{animation:pop .35s}
+[hidden]{display:none!important}
+.kick{display:block;font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--redt);margin-bottom:10px}
+.btn,.add{position:relative;overflow:hidden}
+.rip{position:absolute;border-radius:50%;background:#fff6;transform:scale(0);animation:rp .5s ease-out forwards;pointer-events:none}
+@keyframes rp{to{transform:scale(2.5);opacity:0}}
+.nav a[href="#pedir"]{background:var(--amb);color:var(--ink);font-weight:800;border-radius:99px;box-shadow:none}
+.cprog{height:3px;background:#3a3632;border-radius:3px;margin-top:8px;overflow:hidden}.cprog i{display:block;height:100%;width:30%;background:var(--red)}
+.half{display:grid;gap:20px;align-items:center;background:var(--char);border-radius:20px;padding:22px;border:1px solid #3a3632}
+.half p{color:var(--mut);margin:10px 0 14px}
+.hp{width:min(70%,260px);margin:0 auto;display:block}.hp path{cursor:pointer}
+.hp.bump{animation:bmp .35s}@keyframes bmp{50%{transform:scale(1.06) rotate(4deg)}}
+.hc{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip2{min-height:44px;padding:0 16px;border:2px solid var(--cream);border-radius:99px;font-weight:600;transition:transform .15s}.chip2:active{transform:scale(.96)}
+.steps ol{list-style:none;padding:0;display:grid;gap:12px;margin-top:8px}
+.steps li{display:flex;gap:16px;align-items:center;font-size:18px;padding:16px;border-radius:14px;border:1px solid #3a3632}
+.steps li .i{width:36px;height:36px;color:var(--redt)}
+.cl{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;padding:10px 0;border-bottom:1px solid #0002}
+.cn{flex:1 1 150px}.cn small{display:block;color:#5a5248;font-size:13px}.lp{min-width:60px;text-align:right}
+.nl{display:block;margin:14px 0 4px;font-weight:600}
+.grab{display:block;width:44px;height:5px;border-radius:5px;background:#0003;margin:0 auto 8px}
+.wb.in>*{animation:sl .22s ease-out}@keyframes sl{from{opacity:0;transform:translateX(16px)}}
+@media (min-width:768px){.half{grid-template-columns:1.2fr 1fr;padding:36px}.steps ol{grid-template-columns:repeat(3,1fr)}}
+@keyframes pop{50%{transform:scale(1.35)}}
+@media (min-width:768px){.cities{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:768px){
+ .grid{grid-template-columns:repeat(3,1fr)}.vals,.three{grid-template-columns:repeat(3,1fr)}.start{grid-template-columns:repeat(3,1fr)}
+ .fl{grid-template-columns:repeat(3,1fr)}.rows{grid-template-columns:repeat(2,1fr)}
+}
+@media (min-width:900px){
+ :root{--hh:68px}
+ body{padding-bottom:0}.nav{display:flex}.burger,.bnav,.drawer{display:none!important}
+ .logo-s{width:120px}
+ .cartbar{left:auto;right:24px;bottom:24px;width:340px}
+ .hero .wrap{grid-template-columns:1fr 1fr;gap:48px}.slogan{text-align:left}.btns{justify-content:flex-start}
+ .hlogo{margin:0 0 20px;width:min(100%,440px)}.arrows{display:flex}.grid{grid-template-columns:repeat(4,1fr)}
+ .back{align-items:center}.sheet{border-radius:22px}
+ .toast{bottom:90px}
+}
+@media (hover:hover) and (pointer:fine){
+ .card:hover{transform:translateY(-4px);box-shadow:0 10px 24px #0005}
+ .btn:hover{transform:translateY(-2px)}.btn.pri:hover{background:#ffc94d}
+ .row:hover{background:#fff}.photo{transform:perspective(800px) rotateX(var(--rx,0)) rotateY(var(--ry,0)) translateY(var(--py,0px))}
+ .card:hover .ph img{transform:scale(1.07)}.city:hover{transform:translateY(-3px);border-color:var(--red)}.city:hover:after{transform:translateX(6px)}.val:hover{transform:translateY(-3px);border-color:var(--red)}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="tent" viewBox="0 0 350 250">
+ <g fill="#fff">
+ <path d="M257 60Q93 150 23 238L62 238Q120 150 257 60Z"/>
+ <path d="M257 60Q127 150 72 238L128 238Q167 150 257 60Z"/>
+ <path d="M257 60Q174 150 138 238L196 238Q214 150 257 60Z"/>
+ <path d="M257 60Q221 150 206 238L258 238Q258 150 257 60Z"/>
+ <path d="M257 60Q265 150 268 238L343 238Q317 140 257 60Z"/></g>
+ <path id="flag" fill="#e5102b" d="M257 7 307 27 257 48Z"/>
+ <g fill="#fff"><text x="2" y="98" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="50">c</text>
+ <rect x="35" y="66" width="8" height="32" rx="1"/><text x="48" y="98" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="50">rcus</text></g>
+ <circle cx="39" cy="55" r="5.2" fill="#e5102b"/>
+</symbol>
+<symbol id="i-tent" viewBox="0 0 24 24"><path d="M12 6 3.5 20h17z"/><path d="M12 6 9 20M12 6l3 14"/><path d="M12 2.5v3.5M12 2.5l3.5 1.2L12 5"/></symbol>
+<symbol id="i-slice" viewBox="0 0 24 24"><path d="M3 7c5.5-3.5 12.5-3.5 18 0L12 21z"/><circle cx="10" cy="10.5" r="1"/><circle cx="14.2" cy="11.5" r="1"/><circle cx="12" cy="15.5" r=".9"/></symbol>
+<symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 8.5 12 4.5l8.5 4v8L12 20.5l-8.5-4z"/><path d="M3.5 8.5 12 12.5l8.5-4M12 12.5v8"/></symbol>
+<symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 3c.8 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 .9-3.2 2-4 .2 1.4.9 2.2 2 2.4C10.3 8 10.8 5.5 12 3z"/><path d="M4 21h16"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><rect x="6" y="8.5" width="12" height="7" rx="3.5"/><path d="M2.5 12H6M18 12h3.5"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8.5 5-14 15-14 0 10-5.5 15-14 15"/><path d="M5 19 14 10"/></symbol>
+<symbol id="i-tune" viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 3 10.5l7 3 3 7z"/><path d="M10 13.5 21 3"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol></defs></svg>
+
+<div class="prog" id="prog"></div>
+<header class="top">
+ <div class="wrap in">
+  <a href="#inicio" aria-label="Circus Pizzeria, inicio"><svg class="logo-s" viewBox="0 0 350 250" role="img" aria-label="Circus"><use href="#tent"/></svg></a>
+  <nav class="nav" aria-label="Principal"><a href="#inicio">Inicio</a><a href="#menu">Menú</a><a href="#pedir">Pedir <span class="cnt" data-n="0"></span></a><a href="#nosotros">Nosotros</a></nav>
+  <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><svg class="i" style="width:28px;height:28px" aria-hidden="true"><use href="#i-menu"/></svg></button>
+ </div>
+ <div class="drawer" id="drawer" hidden><a href="#inicio">Inicio</a><a href="#menu">Menú</a><a href="#pedir">Pedir</a><a href="#nosotros">Nosotros</a></div>
+ <div class="stripes"></div>
+</header>
+
+<main>
+<!-- ============ INICIO ============ -->
+<section class="view" id="inicio" hidden>
+ <div class="hero" id="hero">
+  <!-- fondo-2: horno a leña o mesa con pizzas, ambiente oscuro, 3:2 -->
+  <span class="ph herobg" aria-hidden="true"><img src="img/fondo-2.jpg" alt="" width="1200" height="800"></span>
+  <button class="skip" id="skip">Saltar</button>
+  <div class="wrap">
+   <div>
+    <div class="hlogo"><svg id="lg" viewBox="0 0 350 250" role="img" aria-label="Logo Circus"><g fill="#fff"><path class="st" style="--i:0" d="M257 60Q93 150 23 238L62 238Q120 150 257 60Z"/><path class="st" style="--i:1" d="M257 60Q127 150 72 238L128 238Q167 150 257 60Z"/><path class="st" style="--i:2" d="M257 60Q174 150 138 238L196 238Q214 150 257 60Z"/><path class="st" style="--i:3" d="M257 60Q221 150 206 238L258 238Q258 150 257 60Z"/><path class="st" style="--i:4" d="M257 60Q265 150 268 238L343 238Q317 140 257 60Z"/></g><path class="fg" fill="#e5102b" d="M257 7 307 27 257 48Z"/><g class="tx" fill="#fff"><text x="2" y="98" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="50">c</text><rect x="35" y="66" width="8" height="32" rx="1"/><text x="48" y="98" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="50">rcus</text></g><circle class="tx" cx="39" cy="55" r="5.2" fill="#e5102b"/><g id="pzg" aria-hidden="true"></g></svg></div>
+    <div class="slogan"><span class="kick">Pizza a la leña · Cochabamba, Bolivia</span><h1>Un espectáculo de sabores</h1><p>El mejor sabor a la leña</p>
+     <div class="btns"><a class="btn" href="#menu">Ver el menú</a><a class="btn pri" href="#pedir">Pedir ahora</a></div></div>
+   </div>
+   <!-- pizza-1: pizza de la casa vista desde arriba sobre fondo oscuro, 1:1 -->
+   <div class="photo tilt"><span class="ph"><img src="img/pizza-1.jpg" alt="Pizza a la leña de la casa vista desde arriba" width="800" height="800"></span></div>
+  </div>
+ </div>
+ <div class="awn"></div>
+ <div class="wrap pad">
+  <div class="sec-h rv"><h2 class="ul">Pizzas de la casa</h2><div class="arrows"><button aria-label="Anterior" data-sc="-1">←</button><button aria-label="Siguiente" data-sc="1">→</button></div></div>
+  <div class="car" id="car"></div>
+  <div class="cprog"><i id="cpi"></i></div>
+ </div>
+ <div class="wrap pad vals">
+  <div class="val rv"><i class="vi"><svg class="i" aria-hidden="true"><use href="#i-fire"/></svg></i><b>Horno a leña</b><p>Cocinadas en horno a leña.</p></div>
+  <div class="val rv"><i class="vi"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></i><b>Elaboración artesanal</b><p>Pizzas artesanales.</p></div>
+  <div class="val rv"><i class="vi"><svg class="i" aria-hidden="true"><use href="#i-leaf"/></svg></i><b>Ingredientes naturales</b><p>Ingredientes naturales en cada pizza.</p></div>
+ </div>
+ <div class="wrap pad steps"><h2 class="ul rv">Pedir es fácil</h2><ol><li class="rv"><svg class="i" aria-hidden="true"><use href="#i-slice"/></svg>Elige tu pizza o combo</li><li class="rv"><svg class="i" aria-hidden="true"><use href="#i-tune"/></svg>Personalízala paso a paso</li><li class="rv"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg>Revisa y envía tu pedido</li></ol></div>
+ <div class="cta"><!-- fondo-3: pizza recién salida del horno a leña, 2:1 --><span class="ph herobg" aria-hidden="true"><img src="img/fondo-3.jpg" alt="" width="1200" height="600" loading="lazy"></span><div class="wrap rv"><h2>¿Listo para el show?</h2><a class="btn pri" href="#pedir">Pedir ahora</a></div></div>
+</section>
+
+<!-- ============ MENÚ ============ -->
+<section class="view light" id="menu" hidden>
+ <div class="mhead"><!-- fondo-4: mesa con pizzas y bebidas, ambiente oscuro, 3:1 --><span class="ph herobg" aria-hidden="true"><img src="img/fondo-4.jpg" alt="" width="1200" height="400"></span><div class="wrap"><h1>Menú</h1><p style="color:var(--mut)">Toca una tarjeta para ver el detalle o “+” para añadir.</p><input id="q" type="search" placeholder="Buscar en el menú" aria-label="Buscar en el menú" style="margin-top:12px;max-width:420px"></div></div>
+ <nav class="cats" id="cats" aria-label="Categorías"></nav>
+ <div class="wrap" id="msecs"></div>
+ <div class="wrap pad"><a class="btn pri" href="#pedir" style="background:var(--ink);border-color:var(--ink);color:var(--cream)">Ir a pedir</a></div>
+</section>
+
+<!-- ============ PEDIR ============ -->
+<section class="view light" id="pedir" hidden>
+ <div class="wrap pad">
+  <h1>Pedir</h1><p class="note">Elige cómo empezar:</p>
+  <div class="start">
+   <button data-w="dos"><b>Pizza de 2 sabores</b><span>Una mitad de cada sabor · 6 pasos</span></button>
+   <button data-w="c1"><b>Combo Familiar · 109 Bs</b><span>Dos pizzas de 8 porciones o familiares</span></button>
+   <button data-w="c2"><b>Super Combo Grande · 139 Bs</b><span>Dos pizzas de 10 porciones</span></button>
+  </div>
+  <p class="note">¿Prefieres algo rápido? <a href="#menu">Ve al menú</a> y toca “+”.</p>
+  <h2>Tu pedido</h2><div id="cart"></div>
+ </div>
+</section>
+
+<!-- ============ NOSOTROS ============ -->
+<section class="view" id="nosotros" hidden>
+ <div class="wrap pad">
+  <h1>Nosotros</h1>
+  <p style="font-size:20px;margin:14px 0;max-width:640px">Pizzas artesanales a la leña, con ingredientes naturales. Desde Cochabamba, Bolivia.</p>
+  <div class="three">
+   <div class="rv"><h3>A la leña</h3><p>Horno a leña en cada pizza.</p></div>
+   <div class="rv"><h3>Artesanal</h3><p>Elaboración hecha a mano.</p></div>
+   <div class="rv"><h3>Natural</h3><p>Ingredientes naturales.</p></div>
+  </div>
+  <!-- [POR COMPLETAR] Historia de la marca, equipo y fotos del local. No inventar datos. -->
+  <p class="rv" style="margin:24px 0;color:var(--mut)">[POR COMPLETAR] Historia de la marca.</p>
+  <p class="rv" style="margin:-8px 0 24px;color:var(--mut)">[POR COMPLETAR] Dirección, WhatsApp y horarios en Cochabamba.</p>
+  <span class="ph" style="max-width:520px;border-radius:16px"><!-- fondo-1: horno a leña con fuego, 1:1 --><img src="img/fondo-1.jpg" alt="Horno a leña de Circus" width="800" height="800" loading="lazy"></span>
+  <div style="margin-top:24px"><a class="btn pri" href="#menu">Ver el menú</a></div>
+ </div>
+</section>
+
+</main>
+<div class="foot">© Circus Pizzeria · Cochabamba, Bolivia · Maqueta de propuesta</div>
+
+<a class="cartbar" id="cartbar" href="#pedir" hidden><span id="cbn"></span><span id="cbt"></span></a>
+<nav class="bnav" aria-label="Acceso rápido"><a href="#inicio"><svg class="i" aria-hidden="true"><use href="#i-tent"/></svg><span>Inicio</span></a><a href="#menu"><svg class="i" aria-hidden="true"><use href="#i-slice"/></svg><span>Menú</span></a><a href="#pedir"><svg class="i" aria-hidden="true"><use href="#i-box"/></svg><span>Pedir <span class="cnt" data-n="0"></span></span></a></nav>
+
+<div class="back" id="back" hidden><div class="sheet" role="dialog" aria-modal="true" id="sheet"></div></div>
+<div class="wiz" id="wiz" hidden role="dialog" aria-modal="true" aria-label="Armar pedido"></div>
+
+<script>
+document.documentElement.classList.add('js');
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],Bs=n=>n+' Bs';
+document.addEventListener('error',e=>{const t=e.target;if(t.tagName==='IMG'&&t.parentElement.classList.contains('ph')){const p=t.parentElement;p.classList.add('bad');p.innerHTML='<i><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6c5.5-3 12.5-3 18 0L12 21z"/><circle cx="10" cy="9.5" r="1.3"/><circle cx="14" cy="12" r="1.3"/><circle cx="11.5" cy="15" r="1"/></svg></i><small>'+t.getAttribute('src')+'</small>'}},true);
+
+/* ---------- DATOS ---------- */
+const AH='Mozzarella, salsa de tomate, tocino ahumado, cebolla',TBC='Ingredientes por confirmar';
+const mk=(a,d)=>a.map(([n,p,x])=>({n,p,d:x||TBC}));
+const CASA=mk([["Circus",45],["Cuatro Quesos",40],["El Malabarista",42],["Intensa",42],["Diabla",43],["El Viejo",40],["Española",43],["Pollo BBQ",43],["K'ochala",45]]);
+const TRAD=mk([["Jamón y Queso",31],["La Ahumada",31,AH],["Choclitos",33],["La Reine",37],["Gardineira",37],["Vegetariana",35],["Hawaiana",35]]);
+const CALZ=[{n:'Tradicional',p:38,d:'Carne molida, tocino ahumado, mozzarella, cebolla blanca'},{n:'Tuti Cuanti',p:38,d:'Mozzarella, hongos frescos, tomate deshidratado'}];
+const PROMO=[{n:'Combo Familiar',p:109,d:'Dos pizzas de 8 porciones o familiares',w:'c1'},{n:'Super Combo Grande',p:139,d:'Dos pizzas de 10 porciones',w:'c2'}];
+const DOS=[{n:'Pizza de 2 sabores',d:'Escoge un sabor para cada mitad de tu pizza',w:'dos',from:true}];
+// PRECIO DEMO: los precios de Pizza de 2 sabores no están publicados
+const DOSP={'Familiar (8 porciones)':62,'Grande (10 porciones)':78};
+const BEB=[["Pepsi","2 L",18],["Coca Cola","2 L",18],["7UP","2 L",18],["Coca Cola Sin Azúcar","2 L",18],["Pepsi Black","2 L",18],["Pepsi","1 L",12],["Pepsi Black","1 L",12],["7UP","1 L",12],["Guaraná","1 L",12],["Coca Cola","500 ml",8],["Sprite","500 ml",8],["Fanta","500 ml",8],["Coca Cola Sin Azúcar","500 ml",8],["Agua Vital con gas","600 ml",8],["Agua Vital","600 ml",8]].map(([n,s,p])=>({n,s,p}));
+const CERV=[["Campos de Solana Tinto","750 ml",38],["Campos de Solana Blanco","750 ml",38],["Vino Encuentro Grande","750 ml",59],["Vino Encuentro Pequeño","375 ml",30],["Huari","330 ml",17],["Huari Miel","330 ml",17],["Corona","355 ml",17],["Cerveza en lata","",12]].map(([n,s,p])=>({n,s,p}));
+const EX=[['Quesos','',[['Mozzarella',10],['Cheddar',10]]],['Carnes','',[['Jamón',10],['Tocino',10],['Carne molida',10],['Salame',10],['Pollo',10]]],['Verduras y más','',[['Piña',10],['Tomates deshidratados',10],['Hongos frescos',8],['Aceitunas verdes',6],['Aceitunas negras',6],['Albahaca',6],['Rúcula',6],['Choclo',6],['Cebolla',6],['Jalapeño',6],['Locoto',6]]]];
+const CAT={promo:PROMO,dos:DOS,casa:CASA,trad:TRAD,calz:CALZ,beb:BEB,cerv:CERV};
+const SEC=[['promo','Promociones'],['dos','2 sabores'],['casa','De la casa'],['trad','Tradicionales'],['calz','Calzone'],['beb','Bebidas'],['cerv','Cervezas y vinos'],['ext','Extras']];
+const PIZZAS=CASA.concat(TRAD);
+const nm=x=>x.s?x.n+' '+x.s:x.n;
+let pi=0;
+// fotos: pizza-2..pizza-7 = pizzas de la casa vistas desde arriba, fondo oscuro, 1:1 (se reutilizan cíclicamente)
+const ph=(alt)=>`<span class="ph"><img src="img/pizza-${(pi++%6)+2}.jpg" alt="${alt}" width="400" height="400" loading="lazy"></span>`;
+const card=(c,i,x)=>`<div class="card rv" role="button" tabindex="0" data-c="${c}" data-i="${i}"><div class="pw">${ph('Foto de '+x.n)}<b class="tag">${x.p?Bs(x.p):'Desde '+Bs(Math.min(...Object.values(DOSP)))}</b></div><div class="bd"><h3>${x.n}</h3><p>${x.d}</p><div class="pr"><span class="more">${x.w?'Armar →':'Ver detalle'}</span>${x.w?'':`<button class="add" data-add aria-label="Añadir ${x.n}">+</button>`}</div></div></div>`;
+const rowh=(c,i,x)=>`<div class="row rv" role="button" tabindex="0" data-c="${c}" data-i="${i}"><span>${x.n}<small>${x.s}</small></span><b>${Bs(x.p)}</b><button class="add" data-add aria-label="Añadir ${nm(x)}">+</button></div>`;
+
+/* ---------- RENDER ---------- */
+$('#car').innerHTML=CASA.slice(0,6).map((x,i)=>card('casa',i,x).replace('data-c=','data-home data-c=')).join('');
+$('#cats').innerHTML=SEC.map(([k,t])=>`<a href="#m-${k}" data-k="${k}">${t}</a>`).join('');
+$('#msecs').innerHTML=SEC.map(([k,t])=>{let b;
+ if(k==='ext')b=`<p class="note">Extras para pizzas: 10 Bs mozzarella, cheddar, jamón, tocino, carne molida, salame, pollo, piña, tomates deshidratados · 8 Bs hongos frescos · 6 Bs aceitunas, albahaca, rúcula, choclo, cebolla, jalapeño, locoto · Cajas: grande 6 Bs, familiar 5 Bs.</p>`;
+ else if(k==='beb'||k==='cerv')b=`<div class="rows">${CAT[k].map((x,i)=>rowh(k,i,x)).join('')}</div>`;
+ else b=`${k==='dos'?'<p class="note">Escoge un sabor para cada mitad de tu pizza. Familiar (8 porciones) o Grande (10 porciones).</p>':''}<div class="grid">${CAT[k].map((x,i)=>card(k,i,x)).join('')}</div>`;
+ return `<section class="msec" id="m-${k}" data-k="${k}"><h2 class="ul rv">${t}</h2>${b}</section>`}).join('');
+
+/* ---------- CARRITO ---------- */
+let cart=[],uid=0,orderNote='';
+function addC(n,p,d,q=1,note=''){const f=cart.find(i=>i.n===n&&i.d===d&&i.note===note);f?f.q+=q:cart.push({id:++uid,n,p,d,q,note});upd();$$('.cnt,.cartbar').forEach(e=>{e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')});toast('Añadido: '+n)}
+const total=()=>cart.reduce((s,i)=>s+i.p*i.q,0),count=()=>cart.reduce((s,i)=>s+i.q,0);
+function upd(){$$('.cnt').forEach(e=>{e.textContent=count()||'';e.dataset.n=count()});
+ const cb=$('#cartbar');cb.hidden=!count()||location.hash==='#pedir';$('#cbn').textContent=count()+' producto'+(count()>1?'s':'');$('#cbt').textContent=Bs(total())+' · Ver pedido →';renderCart()}
+function renderCart(){const el=$('#cart');if(!el)return;
+ if(!cart.length){el.innerHTML='<p class="note">Aún no agregaste nada. Empieza arriba o desde el menú.</p>';return}
+ el.innerHTML=`<div class="ci">${cart.map(i=>`<div class="cl"><div class="cn"><b>${i.n}</b><small>${i.d||''}</small></div><span class="qty"><button data-q="-1" data-id="${i.id}" aria-label="Menos ${i.n}">−</button><b>${i.q}</b><button data-q="1" data-id="${i.id}" aria-label="Más ${i.n}">+</button></span><b class="lp">${Bs(i.p*i.q)}</b></div>`).join('')}<label class="nl" for="onote">Nota para tu pedido</label><textarea id="onote" rows="2" placeholder="Ej. sin cebolla, tocar el timbre…">${orderNote}</textarea><div class="tl"><span>Total</span><span>${Bs(total())}</span></div><button class="btn pri" id="send" style="width:100%">Enviar pedido</button></div>`}
+function toast(m){const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),1400)}
+
+/* ---------- SHEET ---------- */
+function sheet(c,i){const x=CAT[c][i];let q=1;const S=$('#sheet');
+ const draw=()=>{S.innerHTML=`<i class="grab"></i><button class="x" aria-label="Cerrar" id="sx">✕</button>${ph('Foto de '+nm(x))}<h2>${nm(x)}</h2><p>${x.d||(x.s?'Presentación: '+x.s:'')}</p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px"><span class="qty"><button id="qm" aria-label="Menos">−</button><b>${q}</b><button id="qp" aria-label="Más">+</button></span><button class="btn pri" id="sa">Añadir · ${Bs(x.p*q)}</button></div>`;
+  $('#sx').onclick=closeS;$('#qm').onclick=()=>{q=Math.max(1,q-1);draw()};$('#qp').onclick=()=>{q++;draw()};
+  $('#sa').onclick=()=>{addC(nm(x),x.p,x.d||'',q);closeS()}};
+ draw();$('#back').hidden=false;document.body.classList.add('lock');$('#sx').focus()}
+function closeS(){$('#back').hidden=true;document.body.classList.remove('lock')}
+$('#back').addEventListener('click',e=>{if(e.target.id==='back')closeS()});
+
+/* ---------- FLUJO GUIADO ---------- */
+let W=null;const WN={dos:'Pizza de 2 sabores',c1:'Combo Familiar',c2:'Super Combo Grande'};
+function openW(t){W={t,s:0,size:null,h1:null,h2:null,ex:{},dr:-1,pz:[],note:''};W.steps=t==='dos'?['size','h1','h2','ex','dr','sum']:['pz','dr','sum'];$('#wiz').hidden=false;document.body.classList.add('lock');rw()}
+function closeW(){$('#wiz').hidden=true;document.body.classList.remove('lock');W=null}
+const wBase=()=>W.t==='dos'?(DOSP[W.size]||0):(W.t==='c1'?109:139);
+const wEx=()=>Object.values(W.ex).reduce((s,e)=>s+e,0);
+const wDr=()=>W.dr>=0?BEB[W.dr].p:0;
+const wTot=()=>wBase()+wEx()+wDr();
+function ok(){const k=W.steps[W.s];return k==='size'?!!W.size:k==='h1'?W.h1!==null:k==='h2'?W.h2!==null:k==='pz'?W.pz.length===2:true}
+function fl(sel,k){return `<div class="fl">${PIZZAS.map((x,i)=>`<button data-f="${k}" data-i="${i}" class="${sel(i)?'sel':''}">${ph('Pizza '+x.n)}<span class="n">${x.n}</span></button>`).join('')}</div>`}
+function rw(){const k=W.steps[W.s],n=W.steps.length;let h='';
+ if(k==='size')h=`<h2>¿Qué tamaño?</h2><div class="opts">${Object.entries(DOSP).map(([s,p])=>`<button class="opt ${W.size===s?'sel':''}" data-size="${s}">${s}<b>${Bs(p)}</b></button>`).join('')}</div><p class="note" style="margin-top:8px">PRECIO DEMO</p>`;
+ if(k==='h1')h=`<h2>Primera mitad</h2>${fl(i=>W.h1===i,'h1')}`;
+ if(k==='h2')h=`<h2>Segunda mitad</h2>${fl(i=>W.h2===i,'h2')}`;
+ if(k==='pz')h=`<h2>Elige tus 2 pizzas</h2><p style="margin-bottom:8px;font-weight:600">${W.pz.length===2?'¡Listo! Tienes tus 2 pizzas.':'Faltan '+(2-W.pz.length)}</p><div>${W.pz.map((i,j)=>`<button class="chip" data-rp="${j}">${PIZZAS[i].n} ✕</button>`).join('')}</div>${fl(i=>W.pz.includes(i),'pz')}`;
+ if(k==='ex')h=`<h2>¿Extras?</h2>${EX.map(([g,ic,l])=>`<h3 style="margin:14px 0 8px">${g}</h3><div class="opts">${l.map(([e,p])=>`<button class="opt ${W.ex[e]?'sel':''}" data-ex="${e}" data-p="${p}"><span>${e}</span><b>+${Bs(p)}</b></button>`).join('')}</div>`).join('')}`;
+ if(k==='dr')h=`<h2>¿Bebida?</h2><div class="opts"><button class="opt ${W.dr===-1?'sel':''}" data-dr="-1">Sin bebida</button>${BEB.map((x,i)=>`<button class="opt ${W.dr===i?'sel':''}" data-dr="${i}">${nm(x)}<b>+${Bs(x.p)}</b></button>`).join('')}</div>`;
+ if(k==='sum'){const ls=W.t==='dos'?[['Tamaño',W.size],['Mitad 1',PIZZAS[W.h1].n],['Mitad 2',PIZZAS[W.h2].n]]:[['Pizza 1',PIZZAS[W.pz[0]].n],['Pizza 2',PIZZAS[W.pz[1]].n]];
+  ls.push(['Extras',Object.keys(W.ex).join(', ')||'Ninguno'],['Bebida',W.dr>=0?nm(BEB[W.dr]):'Sin bebida']);
+  h=`<h2>Resumen</h2><ul class="sum" style="padding:0">${ls.map(([a,b])=>`<li><span>${a}</span><b>${b}</b></li>`).join('')}</ul>`}
+ $('#wiz').innerHTML=`<div class="wh"><div><b>${WN[W.t]} · Paso ${W.s+1} de ${n}</b><button id="wx" aria-label="Cerrar" style="min-width:44px;min-height:44px">✕</button></div><div class="bar"><i style="width:${(W.s+1)/n*100}%"></i></div></div><div class="wb ${W.lst!==W.s?'in':''}">${h}</div><div class="wf"><button class="btn" id="wb" ${W.s?'':'style="visibility:hidden"'}>Atrás</button><span class="tot">${W.t==='dos'&&!W.size?'—':Bs(wTot())}</span><button class="btn pri" id="wn2" ${ok()?'':'disabled'}>${k==='sum'?'Añadir al pedido':'Siguiente'}</button></div>`;
+ $('#wx').onclick=closeW;$('#wb').onclick=()=>{if(W.s){W.s--;rw()}};
+ $('#wn2').onclick=()=>{if(W.steps[W.s]==='sum'){const d=(W.t==='dos'?W.size+': ½ '+PIZZAS[W.h1].n+' + ½ '+PIZZAS[W.h2].n:PIZZAS[W.pz[0]].n+' + '+PIZZAS[W.pz[1]].n)+(Object.keys(W.ex).length?' · Extras: '+Object.keys(W.ex).join(', '):'')+' · '+(W.dr>=0?nm(BEB[W.dr]):'Sin bebida');addC(WN[W.t],wTot(),d);closeW();location.hash='#pedir'}else{W.s++;rw()}};
+ W.lst=W.s;const wb=$('.wb');wb.scrollTop=0}
+const nextS=()=>setTimeout(()=>{if(W&&ok()){W.s++;rw()}},180);
+$('#wiz').addEventListener('click',e=>{const t=e.target.closest('button');if(!t||!W)return;
+ if(t.dataset.size){W.size=t.dataset.size;rw();nextS()}
+ else if(t.dataset.f==='h1'||t.dataset.f==='h2'){W[t.dataset.f]=+t.dataset.i;rw();nextS()}
+ else if(t.dataset.f==='pz'){if(W.pz.length<2){W.pz.push(+t.dataset.i);rw()}}
+ else if(t.dataset.rp){W.pz.splice(+t.dataset.rp,1);rw()}
+ else if(t.dataset.ex){const k=t.dataset.ex;W.ex[k]?delete W.ex[k]:W.ex[k]=+t.dataset.p;const y=$('.wb').scrollTop;rw();$('.wb').scrollTop=y}
+ else if(t.dataset.dr!==undefined){W.dr=+t.dataset.dr;rw()}});
+
+/* ---------- EVENTOS GLOBALES ---------- */
+document.addEventListener('click',e=>{
+ const a=e.target.closest('[data-add]');
+ if(a){e.stopPropagation();const h=a.closest('[data-c]'),x=CAT[h.dataset.c][h.dataset.i];addC(nm(x),x.p,x.d||'');a.textContent='✓';a.style.background='var(--red)';setTimeout(()=>{a.textContent='+';a.style.background=''},900);return}
+ const c=e.target.closest('[data-c]');
+ if(c){const x=CAT[c.dataset.c][c.dataset.i];if(c.dataset.home!==undefined&&0)return;x.w?openW(x.w):(c.classList.contains('row')?addC(nm(x),x.p,''):sheet(c.dataset.c,c.dataset.i));return}
+ const w=e.target.closest('[data-w]');if(w){openW(w.dataset.w);return}
+ const q=e.target.closest('[data-q]');if(q){const i=cart.find(x=>x.id==q.dataset.id);i.q+=+q.dataset.q;if(i.q<1)cart=cart.filter(x=>x!==i);upd();return}
+ const r=e.target.closest('[data-rm]');if(r){cart=cart.filter(x=>x.id!=r.dataset.rm);upd();return}
+ const sc=e.target.closest('[data-sc]');if(sc){$('#car').scrollBy({left:280*sc.dataset.sc,behavior:'smooth'});return}
+ if(e.target.closest('#send')){/* PUNTO DE INTEGRACIÓN: aquí iría el POST del pedido al backend / Mercat. Esta maqueta solo confirma. */
+  $('#cart').innerHTML=`<div class="ci" style="text-align:center;padding:28px"><h2>¡Pedido recibido!</h2><p>Esto es una maqueta: no se envió nada. Gracias por probar.</p><a class="btn pri" href="#inicio" style="margin-top:14px">Volver al inicio</a></div>`;cart=[];uid=0;orderNote='';$$('.cnt').forEach(e=>{e.textContent='';e.dataset.n=0});$('#cartbar').hidden=true;return}
+});
+document.addEventListener('input',e=>{if(e.target.id==='onote')orderNote=e.target.value});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){closeS();closeW()}
+ if((e.key==='Enter'||e.key===' ')&&e.target.matches('[role=button][data-c]')){e.preventDefault();e.target.click()}});
+$('#burger').onclick=()=>{const d=$('#drawer');d.hidden=!d.hidden;$('#burger').setAttribute('aria-expanded',!d.hidden)};
+$('#drawer').onclick=()=>{$('#drawer').hidden=true};
+
+/* ---------- ROUTER ---------- */
+const V=['inicio','menu','pedir','nosotros'];
+const io=new IntersectionObserver(es=>{let k=0;es.forEach(x=>{if(x.isIntersecting){const t=x.target,d=(k++%5)*70;t.style.transitionDelay=d+'ms';t.classList.add('on');setTimeout(()=>t.style.transitionDelay='',d+520);io.unobserve(t)}})},{threshold:.1});
+function route(){let h=(location.hash||'#inicio').slice(1);if(h.startsWith('m-'))return;if(!V.includes(h))h='inicio';
+ $$('.view').forEach(v=>v.hidden=v.id!==h);
+ $$('a[href^="#"]').forEach(a=>{if(V.includes(a.getAttribute('href').slice(1))){const on=a.getAttribute('href')==='#'+h;on?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')}});
+ window.scrollTo({top:0,behavior:'instant'});$('#drawer').hidden=true;
+ $$('#'+h+' .rv').forEach(el=>io.observe(el));
+ upd();document.title=h==='inicio'?'Circus Pizzeria | Pizza a la leña en Cochabamba, Bolivia':({menu:'Menú',pedir:'Pedir',nosotros:'Nosotros'}[h])+' | Circus Pizzeria'}
+addEventListener('hashchange',route);
+// scrollspy del menú + clics de categoría
+let tk=false;addEventListener('scroll',()=>{if(tk||location.hash!=='#menu')return;tk=true;requestAnimationFrame(()=>{tk=false;let cur='promo';$$('.msec').forEach(s=>{if(s.getBoundingClientRect().top<150)cur=s.dataset.k});
+ $$('#cats a').forEach(a=>{const on=a.dataset.k===cur;a.classList.toggle('on',on);if(on&&a.getBoundingClientRect().left<0||on&&a.getBoundingClientRect().right>innerWidth)a.scrollIntoView({inline:'center',block:'nearest'})})})},{passive:true});
+$('#cats').addEventListener('click',e=>{const a=e.target.closest('a');if(a){e.preventDefault();$('#m-'+a.dataset.k).scrollIntoView({behavior:'smooth'})}});
+// inclinación solo con puntero fino
+if(matchMedia('(hover:hover) and (pointer:fine)').matches)$$('.tilt').forEach(t=>{t.onmousemove=e=>{const r=t.getBoundingClientRect();t.style.setProperty('--ry',((e.clientX-r.left)/r.width-.5)*8+'deg');t.style.setProperty('--rx',(.5-(e.clientY-r.top)/r.height)*8+'deg')};t.onmouseleave=()=>{t.style.setProperty('--rx','0deg');t.style.setProperty('--ry','0deg')}});
+
+/* ---------- INTRO: pizza → logo (≤2.8 s, saltable, 1 vez por visita) ---------- */
+(function(){const pz=$('#pzg');let s='';const pt=(r,a)=>[175+r*Math.cos(a),125+r*Math.sin(a)].map(n=>n.toFixed(1)).join(' ');
+ for(let k=0;k<8;k++){const a0=(k*45-88)*Math.PI/180,a1=(k*45-50)*Math.PI/180;
+  s+=`<g class="w" style="--i:${k}">${[[98,'#d9a15a'],[88,'#e5102b'],[80,'#f7eddb']].map(([r,c])=>`<path d="M175 125L${pt(r,a0)}A${r} ${r} 0 0 1 ${pt(r,a1)}Z" fill="${c}"/>`).join('')}</g>`}
+ [[70,70],[130,75],[100,50],[60,115],[140,120],[100,140],[80,95],[122,98]].forEach(([x,y],i)=>s+=`<circle class="t" style="--i:${i}" cx="${x+75}" cy="${y+25}" r="8" fill="${i%2?'#0e0c0b':'#a50d20'}"/>`);
+ pz.innerHTML=s;
+ const hero=$('#hero');let done=false;let seen=false;try{seen=sessionStorage.getItem('circusIntro')}catch(e){}
+ const end=()=>{if(done)return;done=true;hero.classList.remove('intro-run');try{sessionStorage.setItem('circusIntro','1')}catch(e){}};
+ if(!seen&&!matchMedia('(prefers-reduced-motion:reduce)').matches&&(location.hash===''||location.hash==='#inicio')){hero.classList.add('intro-run');setTimeout(end,2800);hero.addEventListener('click',end);$('#skip').onclick=end}
+})();
+// buscador del menú
+$('#q').addEventListener('input',e=>{const v=e.target.value.trim().toLowerCase();$$('#msecs .card,#msecs .row').forEach(c=>{const x=CAT[c.dataset.c][c.dataset.i];c.hidden=!!v&&!(nm(x)+' '+(x.d||'')).toLowerCase().includes(v)});$$('.msec').forEach(s=>{s.hidden=!!v&&(s.dataset.k==='ext'||!s.querySelector('.card:not([hidden]),.row:not([hidden])'))})});
+// progreso del carrusel y onda al tocar
+$('#car').addEventListener('scroll',e=>{const c=e.target,m=c.scrollWidth-c.clientWidth;$('#cpi').style.transform='translateX('+(m>0?c.scrollLeft/m*233:0)+'%)'},{passive:true});
+document.addEventListener('pointerdown',e=>{const b=e.target.closest('.btn,.add');if(!b)return;const r=b.getBoundingClientRect(),s=document.createElement('span'),d=Math.max(r.width,r.height);s.className='rip';s.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;b.append(s);setTimeout(()=>s.remove(),500)});
+// imágenes estáticas que fallaron antes de que corriera este script: mostrar marcador solo si NO cargaron
+$$('.ph img').forEach(i=>{if(i.complete&&!i.naturalWidth)i.dispatchEvent(new Event('error'))});
+// scroll: progreso, sombra de cabecera y parallax suave (un solo handler con rAF)
+const prog=$('#prog'),tp=$('.top');let sk=false;
+addEventListener('scroll',()=>{if(sk)return;sk=true;requestAnimationFrame(()=>{sk=false;const y=scrollY,m=document.documentElement.scrollHeight-innerHeight;prog.style.transform='scaleX('+(m>0?y/m:0)+')';tp.classList.toggle('sc',y>10);if(y<900)document.documentElement.style.setProperty('--py',(-y*.07)+'px')})},{passive:true});
+route();
+</script>
+</body>
+</html>
